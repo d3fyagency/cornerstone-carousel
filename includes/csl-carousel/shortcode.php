@@ -76,7 +76,6 @@ switch ( $pagination_type ) {
   </div>
 </div>
 
-
 <?php
 /*
  * => SCRIPTS
@@ -86,6 +85,10 @@ switch ( $pagination_type ) {
 ?>
 <script type="text/javascript">
 (function ($) {
+    $("<?= '#' . $carousel_id ?> > .item").each(function(i) {
+        $(this).attr('data-dot', i+1);
+    });
+
     $(window).load(function () {
         $("<?= '#' . $carousel_id ?>").owlCarousel({
             autoplay: <?= $auto_play ?>,
@@ -94,31 +97,35 @@ switch ( $pagination_type ) {
             autoplayHoverPause: <?= $pause_hover ?>,
             slideBy: <?= is_numeric($slide_by) ? $slide_by : "'{$slide_by}'" ?>,
             nav: <?= $nav ?>,
-            dotsEach: <?= is_numeric($slide_by) ? 'true' : 'false' ?>,
             <?php if ( $auto_valign ) : ?>
             onInitialized: setOwlStageHeight,
             onResized: setOwlStageHeight,
             onTranslated: setOwlStageHeight,
             <?php endif; ?>
-            dots: <?= $dots ?>
+            dotContainer: 'span',
             <?php
             // TODO: In order to display the page numbers set `dotData` to true and follow
             //  this tip: https://github.com/OwlCarousel2/OwlCarousel2/issues/158#issuecomment-56747066
-            // dotData: true
             ?>
+            <?php if ( $nums === 'true' ) : ?>
+            dotsEach: false,
+            dotsData: true,
+            <?php endif; ?>
+            dots: <?= $dots ?>
         });
 
         <?php if ( $auto_valign ) : ?>
         function setOwlStageHeight(event) {
+
             var maxHeight = 0;
 
-            $('.owl-item.active').each(function () { // LOOP THROUGH ACTIVE ITEMS
+            $('<?= '#' . $carousel_id ?> .owl-item.active').each(function () { // LOOP THROUGH ACTIVE ITEMS
                 var thisHeight = parseInt($(this).height());
                 maxHeight = (maxHeight >= thisHeight ? maxHeight : thisHeight);
             });
 
-            $('.owl-carousel').css('height', maxHeight);
-            $('.owl-stage').css('height', maxHeight); // CORRECT DRAG-AREA SO BUTTONS ARE CLICKABLE
+            $('<?= '#' . $carousel_id ?> .owl-carousel').css('height', maxHeight);
+            $('<?= '#' . $carousel_id ?> .owl-stage').addClass('flex').css('height', maxHeight); // CORRECT DRAG-AREA SO BUTTONS ARE CLICKABLE
         }
         <?php endif; ?>
     });
