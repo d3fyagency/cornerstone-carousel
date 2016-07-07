@@ -1,0 +1,16 @@
+.owl-carousel,
+.owl-stage-outer { transition: height 500ms ease-in-out 0s; }
+
+.owl-carousel .owl-item img {
+    width: auto;
+    margin-bottom: 0;
+}
+
+.owl-stage {
+    display: flex;
+    align-items: center;
+}
+
+.owl-carousel .owl-item .item a {
+    display: block;
+}
