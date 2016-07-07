@@ -1,7 +1,8 @@
 {
   "name": "cornerstone-library-carousel",
   "authors": [
-    "William <hello@bigwilliam.com>"
+    "William <hello@bigwilliam.com>",
+    "Janzen <janzen.zarzoso@gmail.com"
   ],
   "description": "Carousel Element for the Cornerstone Page Builder in WordPress",
   "main": "",

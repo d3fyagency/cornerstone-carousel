@@ -3,7 +3,7 @@
 Plugin Name: Cornerstone Library: Carousel
 Plugin URI:  http://bigwilliam.com/
 Description: Adds a carousel element to the Cornerstone Page builder. Download plugin at <a href="http://cornerstonelibrary.com" target="_blank">Cornerstone Library</a>.
-Version:     3.1.4
+Version:     3.2.0
 Author:      BigWilliam
 Author URI:  http://bigwilliam.com
 Author Email: hello@bigwilliam.com
@@ -38,6 +38,7 @@ add_action( 'wp_enqueue_scripts', 'csl_carousel_scripts');
 function csl_carousel_scripts() {
   wp_enqueue_style( 'owl-main-css',  CSL_CAROUSEL_URL . 'bower_components/owl.carousel/dist/assets/owl.carousel.css', array(), '1.2' );
   wp_enqueue_style( 'owl-theme-css', CSL_CAROUSEL_URL . 'bower_components/owl.carousel/dist/assets/owl.theme.default.css', array(), '1.2' );
+  wp_enqueue_style( 'csl-carousel', CSL_CAROUSEL_URL . 'assets/css/cornerstone-carousel.css', array(), '1.0' );
   wp_enqueue_script( 'owlcarousel-js', CSL_CAROUSEL_URL . 'bower_components/owl.carousel/dist/owl.carousel.js', array('jquery'), null, true );
 }
 
