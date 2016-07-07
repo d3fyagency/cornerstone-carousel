@@ -102,7 +102,6 @@ switch ( $pagination_type ) {
             onResized: setOwlStageHeight,
             onTranslated: setOwlStageHeight,
             <?php endif; ?>
-            dotContainer: 'span',
             <?php
             // TODO: In order to display the page numbers set `dotData` to true and follow
             //  this tip: https://github.com/OwlCarousel2/OwlCarousel2/issues/158#issuecomment-56747066
