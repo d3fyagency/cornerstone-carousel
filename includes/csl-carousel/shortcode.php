@@ -62,7 +62,27 @@ switch ( $pagination_type ) {
     break;
 }
 
+// take an educated guess at responsive max visible settings
+$max_items_lg = intval( $max_visible_items );
+$slide_by_lg = intval( $slide_by );
+if ( $max_items_lg >= 6 ) {
+    $max_items_md = 5;
+    $max_items_sm = 4;
+    $max_items_xs = 2;
+} else if ( $max_items_lg >= 4) {
+    $max_items_md = 3;
+    $max_items_sm = 2;
+    $max_items_xs = 1;
+} else {
+    $max_items_md = ( $max_items_lg >= 2 ) ? 2 : 1;
+    $max_items_sm = 1;
+    $max_items_xs = 1;
+}
 
+// make sure slide by is never larger than max visible on smaller screens
+$slide_by_md = ( $slide_by_lg > $max_items_md ) ? $max_items_md : $slide_by_lg ;
+$slide_by_sm = ( $slide_by_lg > $max_items_sm ) ? $max_items_sm : $slide_by_lg ;
+$slide_by_xs = ( $slide_by_lg > $max_items_xs ) ? $max_items_xs : $slide_by_lg ;
 
 
 /*
@@ -111,7 +131,26 @@ switch ( $pagination_type ) {
             dotsEach: false,
             dotsData: true,
             <?php endif; ?>
-            dots: <?= $dots ?>
+            dots: <?= $dots ?>,
+            responsiveClass: true,
+            responsive: {
+              0:{
+                  items: <?php echo $max_items_xs; ?>,
+                  slideBy: <?php echo $slide_by_xs; ?>
+              },
+              768:{
+                  items: <?php echo $max_items_sm; ?>,
+                  slideBy: <?php echo $slide_by_sm; ?>
+              },
+              992:{
+                  items: <?php echo $max_items_md; ?>,
+                  slideBy: <?php echo $slide_by_md; ?>
+              },
+              1200:{
+                  items: <?php echo $max_items_lg; ?>,
+                  slideBy: <?php echo $slide_by_lg; ?>
+              }
+            }
         });
 
         <?php if ( $auto_valign ) : ?>
