@@ -105,70 +105,67 @@ $slide_by_xs = ( $slide_by_lg > $max_items_xs ) ? $max_items_xs : $slide_by_lg ;
 ?>
 <script type="text/javascript">
 
-(function ($) {
-    $("<?= '#' . $carousel_id ?> > .item").each(function(i) {
-        $(this).attr('data-dot', i+1);
+jQuery(document).ready(function($) {
+  
+  $("<?= '#' . $carousel_id ?> > .item").each(function(i) {
+    $(this).attr('data-dot', i+1);
+  });
+  
+  $("<?= '#' . $carousel_id ?>").owlCarousel({
+    autoplay: <?= $auto_play ?>,
+    loop: <?= $loop ?>,
+    items: <?= $max_visible_items ?>,
+    autoplayHoverPause: <?= $pause_hover ?>,
+    slideBy: <?= is_numeric($slide_by) ? $slide_by : "'{$slide_by}'" ?>,
+    nav: <?= $nav ?>,
+    <?php if ( $auto_valign ) : ?>
+    onInitialized: setOwlStageHeight,
+    onResized: setOwlStageHeight,
+    onTranslated: setOwlStageHeight,
+    <?php endif; ?>
+    <?php
+    // TODO: In order to display the page numbers set `dotData` to true and follow
+    //  this tip: https://github.com/OwlCarousel2/OwlCarousel2/issues/158#issuecomment-56747066
+    ?>
+    <?php if ( $nums === 'true' ) : ?>
+    dotsEach: false,
+    dotsData: true,
+    <?php endif; ?>
+    dots: <?= $dots ?>,
+    responsiveClass: true,
+    responsive: {
+      0:{
+          items: <?php echo $max_items_xs; ?>,
+          slideBy: <?php echo $slide_by_xs; ?>
+      },
+      768:{
+          items: <?php echo $max_items_sm; ?>,
+          slideBy: <?php echo $slide_by_sm; ?>
+      },
+      992:{
+          items: <?php echo $max_items_md; ?>,
+          slideBy: <?php echo $slide_by_md; ?>
+      },
+      1200:{
+          items: <?php echo $max_items_lg; ?>,
+          slideBy: <?php echo $slide_by_lg; ?>
+      }
+    }
+  });
+
+  <?php if ( $auto_valign ) : ?>
+  function setOwlStageHeight(event) {
+    var maxHeight = 0;
+    $('<?= '#' . $carousel_id ?> .owl-item.active').each(function () { // LOOP THROUGH ACTIVE ITEMS
+        var thisHeight = parseInt($(this).height());
+        maxHeight = (maxHeight >= thisHeight ? maxHeight : thisHeight);
     });
+    $('<?= '#' . $carousel_id ?> .owl-carousel').css('height', maxHeight);
+    $('<?= '#' . $carousel_id ?> .owl-stage').addClass('flex').css('height', maxHeight); // CORRECT DRAG-AREA SO BUTTONS ARE CLICKABLE
+  }
+  <?php endif; ?>
+});
 
-    $(window).load(function () {
-        $("<?= '#' . $carousel_id ?>").owlCarousel({
-            autoplay: <?= $auto_play ?>,
-            loop: <?= $loop ?>,
-            items: <?= $max_visible_items ?>,
-            autoplayHoverPause: <?= $pause_hover ?>,
-            slideBy: <?= is_numeric($slide_by) ? $slide_by : "'{$slide_by}'" ?>,
-            nav: <?= $nav ?>,
-            <?php if ( $auto_valign ) : ?>
-            onInitialized: setOwlStageHeight,
-            onResized: setOwlStageHeight,
-            onTranslated: setOwlStageHeight,
-            <?php endif; ?>
-            <?php
-            // TODO: In order to display the page numbers set `dotData` to true and follow
-            //  this tip: https://github.com/OwlCarousel2/OwlCarousel2/issues/158#issuecomment-56747066
-            ?>
-            <?php if ( $nums === 'true' ) : ?>
-            dotsEach: false,
-            dotsData: true,
-            <?php endif; ?>
-            dots: <?= $dots ?>,
-            responsiveClass: true,
-            responsive: {
-              0:{
-                  items: <?php echo $max_items_xs; ?>,
-                  slideBy: <?php echo $slide_by_xs; ?>
-              },
-              768:{
-                  items: <?php echo $max_items_sm; ?>,
-                  slideBy: <?php echo $slide_by_sm; ?>
-              },
-              992:{
-                  items: <?php echo $max_items_md; ?>,
-                  slideBy: <?php echo $slide_by_md; ?>
-              },
-              1200:{
-                  items: <?php echo $max_items_lg; ?>,
-                  slideBy: <?php echo $slide_by_lg; ?>
-              }
-            }
-        });
-
-        <?php if ( $auto_valign ) : ?>
-        function setOwlStageHeight(event) {
-
-            var maxHeight = 0;
-
-            $('<?= '#' . $carousel_id ?> .owl-item.active').each(function () { // LOOP THROUGH ACTIVE ITEMS
-                var thisHeight = parseInt($(this).height());
-                maxHeight = (maxHeight >= thisHeight ? maxHeight : thisHeight);
-            });
-
-            $('<?= '#' . $carousel_id ?> .owl-carousel').css('height', maxHeight);
-            $('<?= '#' . $carousel_id ?> .owl-stage').addClass('flex').css('height', maxHeight); // CORRECT DRAG-AREA SO BUTTONS ARE CLICKABLE
-        }
-        <?php endif; ?>
-    });
-})(jQuery);
 </script> 
 
 

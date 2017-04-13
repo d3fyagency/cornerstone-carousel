@@ -10,7 +10,7 @@ return array(
 
 	'heading' => array(
 		'type' => 'title',
-		'suggest' => __( 'Carousel Item', '__x__' ),
+		'suggest' => __( 'Carousel Item', 'cornerstone' ),
 	),
 
 	// Content
@@ -18,6 +18,6 @@ return array(
 	'content' => array(
 		'type' => 'editor',
 		'context' => 'content',
-		'suggest' => __( 'Add an image, shortcode, or text here! Button links also work!', '__x__' ),
+		'suggest' => __( 'Add an image, shortcode, or text here! Button links also work!', 'cornerstone' ),
 	)
 );
